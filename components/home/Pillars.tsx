@@ -1,5 +1,5 @@
+import Image from 'next/image'
 import { BookOpen, ClipboardList, Trophy, Users } from 'lucide-react'
-import { Placeholder } from '@/components/ui/Placeholder'
 import { Reveal } from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { IconBox } from '@/components/ui/IconBox'
@@ -8,7 +8,7 @@ const PILLARS = [
   {
     icon: BookOpen,
     title: 'Academics',
-    text: 'Three A/L streams across the sciences, arts and commerce, with results among the island\u2019s best.',
+    text: 'Three A/L streams across the sciences, arts and commerce, with results among the island’s best.',
     href: '/academics',
   },
   {
@@ -33,7 +33,7 @@ const PILLARS = [
 
 export function Pillars() {
   return (
-    <section className="section border-b border-line">
+    <section className="section">
       <div className="container">
         <Reveal>
           <SectionHeading
@@ -43,12 +43,17 @@ export function Pillars() {
           />
         </Reveal>
 
-        <div className="grid items-stretch gap-10 lg:grid-cols-2">
+        <div className="grid gap-10 lg:grid-cols-2">
           <Reveal className="h-full">
-            <Placeholder
-              label="Nalanda · Spirit"
-              className="aspect-[4/5] min-h-[320px] lg:aspect-auto lg:h-full"
-            />
+            <div className="relative h-full min-h-[420px]">
+              <Image
+                src="https://picsum.photos/seed/nalanda-pillars/800/1000"
+                alt="Nalanda spirit"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
           </Reveal>
 
           <div className="grid content-start gap-4 sm:grid-cols-2">

@@ -7,9 +7,7 @@ import { contactSchema, type ContactInput } from '@/lib/validations/contact'
 const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || ''
 
 const inputClass =
-  'w-full border border-line bg-transparent px-4 py-2.5 text-heading placeholder:text-dim transition-colors focus:border-maroon-mid focus:outline-none'
-
-const labelClass = 'mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-dim'
+  'w-full border-0 border-b border-line bg-transparent px-0 py-4 text-heading placeholder:text-dim transition-colors focus:border-maroon-mid focus:outline-none'
 
 export function ContactForm() {
   const {
@@ -42,7 +40,7 @@ export function ContactForm() {
           name: parsed.data.name,
           email: parsed.data.email,
           phone: parsed.data.phone || '',
-          subject: parsed.data.subject,
+          subject: 'Nalanda College Contact Form',
           message: parsed.data.message,
         }),
       })
@@ -58,46 +56,42 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 border border-line p-7 md:p-10">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
-        <label htmlFor="name" className={labelClass}>
-          Name
-        </label>
-        <input id="name" {...register('name')} className={inputClass} />
+        <input id="name" placeholder="Full name *" {...register('name')} className={inputClass} />
         {errors.name && <p className="mt-1 text-xs text-maroon-glow">{errors.name.message}</p>}
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label htmlFor="email" className={labelClass}>
-            Email
-          </label>
-          <input id="email" type="email" {...register('email')} className={inputClass} />
-          {errors.email && <p className="mt-1 text-xs text-maroon-glow">{errors.email.message}</p>}
-        </div>
-        <div>
-          <label htmlFor="phone" className={labelClass}>
-            Phone (optional)
-          </label>
-          <input id="phone" {...register('phone')} className={inputClass} />
-        </div>
+      <div>
+        <input
+          id="phone"
+          type="tel"
+          placeholder="Phone *"
+          {...register('phone')}
+          className={inputClass}
+        />
+        {errors.phone && <p className="mt-1 text-xs text-maroon-glow">{errors.phone.message}</p>}
       </div>
 
       <div>
-        <label htmlFor="subject" className={labelClass}>
-          Subject
-        </label>
-        <input id="subject" {...register('subject')} className={inputClass} />
-        {errors.subject && (
-          <p className="mt-1 text-xs text-maroon-glow">{errors.subject.message}</p>
-        )}
+        <input
+          id="email"
+          type="email"
+          placeholder="E-mail address *"
+          {...register('email')}
+          className={inputClass}
+        />
+        {errors.email && <p className="mt-1 text-xs text-maroon-glow">{errors.email.message}</p>}
       </div>
 
       <div>
-        <label htmlFor="message" className={labelClass}>
-          Message
-        </label>
-        <textarea id="message" rows={5} {...register('message')} className={inputClass} />
+        <textarea
+          id="message"
+          rows={4}
+          placeholder="Your message..."
+          {...register('message')}
+          className={inputClass}
+        />
         {errors.message && (
           <p className="mt-1 text-xs text-maroon-glow">{errors.message.message}</p>
         )}
@@ -108,7 +102,7 @@ export function ContactForm() {
         disabled={status === 'loading'}
         className="btn btn-primary w-full justify-center disabled:opacity-60"
       >
-        {status === 'loading' ? 'Sending...' : 'Send Message'}
+        {status === 'loading' ? 'Sending...' : 'SEND MESSAGE'}
       </button>
 
       {status === 'success' && (

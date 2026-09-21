@@ -24,7 +24,7 @@ export function QuickTiles() {
           <Link
             key={tile.href}
             href={tile.href}
-            className={`group flex items-center justify-between gap-6 px-2 py-8 transition-colors hover:bg-bg-panel ${
+            className={`group flex items-center justify-between gap-6 py-8 transition-colors hover:bg-bg-panel ${
               i === 0 ? 'md:border-r md:border-line' : ''
             } border-b border-line md:border-b-0`}
           >

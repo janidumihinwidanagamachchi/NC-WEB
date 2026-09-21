@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react'
 import { PageHeader } from '@/components/shared/PageHeader'
@@ -8,13 +9,15 @@ import { Reveal } from '@/components/ui/Reveal'
 
 const ALBUMS = ['All', 'Sports', 'Cultural', 'Academic', 'Campus']
 
-const GALLERY = Array.from({ length: 16 }, (_, i) => ({
-  id: i + 1,
-  album: ALBUMS[1 + (i % 4)],
-  title: `Photo ${i + 1}`,
-  color: ['#1a0a00', '#0a0500', '#05060a', '#000a05'][i % 4],
-  accent: ['#c8960c', '#6b0f1a', '#2a5f3f', '#1a3a6b'][i % 4],
-}))
+const GALLERY = Array.from({ length: 16 }, (_, i) => {
+  const id = i + 1
+  return {
+    id,
+    album: ALBUMS[1 + (i % 4)],
+    title: `Photo ${id}`,
+    image: `https://picsum.photos/seed/nalanda-gallery-${id}/600/600`,
+  }
+})
 
 export default function GalleryPage() {
   const [filter, setFilter] = useState('All')
@@ -57,11 +60,12 @@ export default function GalleryPage() {
                   className="group relative block aspect-square w-full overflow-hidden border border-line transition-colors hover:border-maroon-mid focus-visible:ring-2 focus-visible:ring-maroon-glow"
                   aria-label={`View ${item.title}`}
                 >
-                  <div
-                    className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
-                    style={{
-                      background: `linear-gradient(135deg, ${item.color}, ${item.accent}33)`,
-                    }}
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
                   />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
                     <ZoomIn size={20} className="text-gold" />
@@ -112,19 +116,16 @@ export default function GalleryPage() {
             </button>
 
             <div
-              className="flex h-[70vh] w-[80vw] max-w-4xl items-center justify-center overflow-hidden"
-              style={{
-                background: `linear-gradient(135deg, ${filtered[lightbox].color}, ${filtered[lightbox].accent}33)`,
-              }}
+              className="relative h-[70vh] w-[80vw] max-w-4xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="text-center text-heading">
-                <div className="mb-3 text-6xl" style={{ color: filtered[lightbox].accent }}>
-                  ◆
-                </div>
-                <p className="text-sm">{filtered[lightbox].title}</p>
-                <p className="mt-1 text-xs text-dim">{filtered[lightbox].album}</p>
-              </div>
+              <Image
+                src={filtered[lightbox].image.replace('/600/600', '/1200/1200')}
+                alt={filtered[lightbox].title}
+                fill
+                className="object-contain"
+                sizes="80vw"
+              />
             </div>
 
             <div className="absolute bottom-4 text-sm text-dim">

@@ -98,7 +98,7 @@ export function SearchClient() {
           <Link
             key={`${item._type}-${item.slug?.current ?? i}`}
             href={hrefFor(item)}
-            className="group block px-3 py-6 transition-colors hover:bg-bg-panel"
+            className="group block py-6 transition-colors"
           >
             <span className="text-xs uppercase tracking-[0.18em] text-gold">{item._type}</span>
             <h3 className="mt-1 font-display text-xl text-heading transition-colors group-hover:text-gold-light">

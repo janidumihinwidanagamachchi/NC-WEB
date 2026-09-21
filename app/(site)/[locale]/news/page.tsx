@@ -61,7 +61,7 @@ export default async function NewsPage() {
               <Reveal key={item._id} delay={i * 0.04}>
                 <Link
                   href={`/news/${item.slug.current}`}
-                  className="group grid gap-3 py-8 transition-colors hover:bg-bg-panel sm:grid-cols-[150px_1fr_auto] sm:items-baseline sm:gap-8 sm:px-4"
+                  className="group grid gap-3 py-8 transition-colors sm:grid-cols-[150px_1fr_auto] sm:items-baseline sm:gap-8"
                 >
                   <span className="text-xs font-semibold uppercase tracking-[0.18em] text-dim">
                     {fmtDate(item.publishedAt)}

@@ -9,16 +9,19 @@ const PAST_PRINCIPALS = [
     name: 'Mr. K. K. Liyanage',
     term: 'Past Principal',
     blurb: 'Stewarded the College through a decade of growth in the modern era.',
+    image: 'https://picsum.photos/seed/nalanda-principal-1/600/800',
   },
   {
     name: 'Mrs. S. Perera',
     term: 'Past Principal',
     blurb: 'Championed academic excellence and co-curricular breadth.',
+    image: 'https://picsum.photos/seed/nalanda-principal-2/600/800',
   },
   {
     name: 'Mr. R. Fernando',
     term: 'Past Principal',
     blurb: 'Expanded sporting and scouting traditions across the school.',
+    image: 'https://picsum.photos/seed/nalanda-principal-3/600/800',
   },
 ]
 
@@ -42,9 +45,10 @@ export function PrincipalsBanner() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {PAST_PRINCIPALS.map((p, i) => (
-            <Reveal key={p.name} delay={i * 0.08}>
+            <Reveal key={p.name} delay={i * 0.08} className="h-full">
               <BannerCard
                 href="/about/principals"
+                image={p.image}
                 title={p.name}
                 meta={p.term}
                 caption={p.blurb}

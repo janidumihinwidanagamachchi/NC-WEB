@@ -145,27 +145,27 @@ h4 {
 }
 
 h1 {
-  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
   letter-spacing: -0.04em;
 }
 h2 {
-  font-size: clamp(1.9rem, 4.2vw, 3.4rem);
-  letter-spacing: -0.03em;
+  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+  letter-spacing: -0.02em;
 }
 h3 {
-  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
 }
 h4 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
 }
 
 .section-heading {
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 4.2vw, 3.4rem);
+  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
   color: var(--heading);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 .section-heading span {
   color: var(--gold);
@@ -192,13 +192,44 @@ h4 {
 
 /* ── Container / section rhythm ─────────────────────────────────────────── */
 .container {
-  max-width: 1280px;
+  max-width: 1220px;
   margin-inline: auto;
-  padding-inline: clamp(1rem, 5vw, 4rem);
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
 }
 
 .section {
-  padding-block: clamp(3.5rem, 7vw, 6.5rem);
+  padding-block: 6rem;
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding-block: 3rem;
+  }
+}
+
+.section-hero {
+  padding-top: 260px;
+  padding-bottom: 56px;
+}
+
+@media (max-width: 959px) {
+  .section-hero {
+    padding-top: 230px;
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-hero {
+    padding-top: 180px;
+    padding-bottom: 32px;
+  }
+}
+
+.section--bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hairline {

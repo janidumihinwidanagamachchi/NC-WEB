@@ -14,7 +14,7 @@ export function PageHeader({
   description?: string
 }) {
   return (
-    <div className="relative pt-36 pb-20 border-b border-line">
+    <div className="relative pb-16 pt-36">
       <div
         className="pointer-events-none absolute inset-0"
         style={{
@@ -29,13 +29,13 @@ export function PageHeader({
           </Reveal>
         )}
         <Reveal delay={0.06}>
-          <h1 className="mt-5 text-5xl sm:text-6xl md:text-7xl">
+          <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl">
             {title} {highlight && <span className="text-gold">{highlight}</span>}
           </h1>
         </Reveal>
         {description && (
           <Reveal delay={0.12}>
-            <p className="mx-auto mt-6 max-w-2xl text-body leading-relaxed">{description}</p>
+            <p className="mx-auto mt-6 max-w-2xl leading-relaxed text-body">{description}</p>
           </Reveal>
         )}
       </div>

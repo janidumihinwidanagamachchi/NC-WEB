@@ -1,8 +1,8 @@
 import { getTranslations } from 'next-intl/server'
+import Image from 'next/image'
 import { PageHeader } from '@/components/shared/PageHeader'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Reveal } from '@/components/ui/Reveal'
-import { Placeholder } from '@/components/ui/Placeholder'
 import { CheckCircle } from 'lucide-react'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -32,7 +32,7 @@ export default async function AboutPage() {
                 </>
               }
             />
-            <div className="space-y-4 text-body leading-relaxed">
+            <div className="space-y-4 leading-relaxed text-body">
               <p>
                 Founded in 1924 by a group of Buddhist leaders in Colombo, Nalanda College began as
                 a small institution with a profound vision: to provide a holistic education rooted
@@ -59,7 +59,15 @@ export default async function AboutPage() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <Placeholder label="Nalanda College" className="aspect-[4/3]" />
+            <div className="relative aspect-[4/3]">
+              <Image
+                src="https://picsum.photos/seed/nalanda-about/800/600"
+                alt="Nalanda College"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
           </Reveal>
         </div>
       </section>

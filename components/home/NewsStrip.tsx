@@ -44,7 +44,7 @@ export function NewsStrip({ articles }: { articles?: NewsArticle[] }) {
   const items = articles?.length ? articles : DEMO
 
   return (
-    <section className="section border-b border-line">
+    <section className="section">
       <div className="container">
         <Reveal>
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
@@ -64,13 +64,13 @@ export function NewsStrip({ articles }: { articles?: NewsArticle[] }) {
             <Reveal key={item._id} delay={i * 0.06}>
               <Link
                 href={`/news/${item.slug.current}`}
-                className="group grid gap-3 py-7 transition-colors hover:bg-bg-panel sm:grid-cols-[130px_1fr_auto] sm:items-baseline sm:gap-6 sm:px-3"
+                className="group grid gap-3 py-7 transition-colors sm:grid-cols-[130px_1fr_auto] sm:items-baseline sm:gap-6"
               >
                 <span className="text-xs font-semibold uppercase tracking-[0.18em] text-dim">
                   {fmtDate(item.publishedAt)}
                 </span>
                 <span className="min-w-0">
-                  <span className="block font-display text-xl text-heading transition-colors group-hover:text-gold-light">
+                  <span className="block font-display text-xl text-heading transition-colors group-hover:text-gold-light sm:text-2xl">
                     {item.title}
                   </span>
                   <span className="mt-1.5 block max-w-2xl text-sm text-dim">{item.excerpt}</span>

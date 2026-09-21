@@ -6,6 +6,12 @@ import { sanityFetch } from '@/lib/sanity/client'
 import { staffQuery } from '@/lib/sanity/queries'
 import type { StaffMember } from '@/types/sanity'
 
+const IMAGES = [
+  'https://picsum.photos/seed/nalanda-principal-1/600/800',
+  'https://picsum.photos/seed/nalanda-principal-2/600/800',
+  'https://picsum.photos/seed/nalanda-principal-3/600/800',
+]
+
 const DEMO: StaffMember[] = [
   {
     _id: 'p1',
@@ -41,6 +47,7 @@ export default async function PrincipalsPage() {
               <Reveal key={p._id} delay={i * 0.08} className="h-full">
                 <BannerCard
                   href="/about/principals"
+                  image={IMAGES[i % IMAGES.length]}
                   title={p.name}
                   meta={p.designation}
                   placeholderLabel="Portrait"

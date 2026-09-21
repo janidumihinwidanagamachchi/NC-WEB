@@ -25,6 +25,11 @@ const DEMO: AlumniAchievement[] = [
   },
 ]
 
+const IMAGES = [
+  'https://picsum.photos/seed/nalanda-alumni-1/600/600',
+  'https://picsum.photos/seed/nalanda-alumni-2/600/600',
+]
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'nav' })
@@ -45,7 +50,7 @@ export default async function AlumniPage() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <p className="mx-auto max-w-2xl text-center text-body leading-relaxed">
+            <p className="mx-auto max-w-2xl text-center leading-relaxed text-body">
               Old Nalandians continue to shape Sri Lanka and the world across every field of human
               endeavour.
             </p>
@@ -56,6 +61,7 @@ export default async function AlumniPage() {
               <Reveal key={person._id} delay={i * 0.06} className="h-full">
                 <BannerCard
                   href="/alumni"
+                  image={IMAGES[i % IMAGES.length]}
                   title={person.name}
                   meta={`${person.field} · Batch ${person.batch}`}
                   caption={person.achievement}
