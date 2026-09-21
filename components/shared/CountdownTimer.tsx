@@ -18,7 +18,7 @@ export function CountdownTimer({ target }: { target: string | Date }) {
 
   const diff = new Date(target).getTime() - now.getTime()
   if (diff <= 0) {
-    return <div className="text-2xl font-display text-maroon-glow">Event has started</div>
+    return <div className="font-display text-2xl text-gold">Event has started</div>
   }
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24))
@@ -34,16 +34,14 @@ export function CountdownTimer({ target }: { target: string | Date }) {
   ]
 
   return (
-    <div className="flex gap-4 justify-center">
+    <div className="flex justify-center gap-3">
       {units.map((u) => (
         <div
           key={u.label}
-          className="w-16 sm:w-20 aspect-square rounded-xl bg-bg-card border border-maroon/20 flex flex-col items-center justify-center"
+          className="flex w-16 flex-col items-center justify-center border border-line bg-bg-panel py-4 sm:w-20"
         >
-          <span className="text-2xl sm:text-3xl font-display text-silver-bright">
-            {pad(u.value)}
-          </span>
-          <span className="text-[10px] uppercase tracking-wider text-silver-dim">{u.label}</span>
+          <span className="font-display text-2xl text-gold sm:text-3xl">{pad(u.value)}</span>
+          <span className="mt-1 text-[10px] uppercase tracking-[0.18em] text-dim">{u.label}</span>
         </div>
       ))}
     </div>

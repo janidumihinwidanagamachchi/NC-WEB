@@ -1,10 +1,10 @@
 import { getTranslations } from 'next-intl/server'
 import { PageHeader } from '@/components/shared/PageHeader'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { LiveBackground } from '@/components/shared/LiveBackground'
+import { Reveal } from '@/components/ui/Reveal'
 import { sanityFetch } from '@/lib/sanity/client'
 import { allEventsQuery } from '@/lib/sanity/queries'
 import { CountdownTimer } from '@/components/shared/CountdownTimer'
+import { Clock } from 'lucide-react'
 import type { Event } from '@/types/sanity'
 
 const DEMO: Event[] = [
@@ -28,6 +28,9 @@ const DEMO: Event[] = [
   },
 ]
 
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'nav' })
@@ -44,47 +47,42 @@ export default async function EventsPage() {
     <>
       <PageHeader eyebrow="Calendar" title="Events &" highlight="Happenings" />
 
-      <section className="section relative overflow-hidden">
-        <LiveBackground variant="section" />
-        <div className="container relative">
+      <section className="section">
+        <div className="container">
           {featured && (
-            <AnimatedSection className="card p-8 md:p-12 text-center mb-12">
-              <span className="badge badge-maroon mb-4">{featured.type}</span>
-              <h2 className="text-3xl md:text-4xl font-display text-silver-bright mb-4">
-                {featured.title}
-              </h2>
-              <p className="text-silver-dim mb-8">
-                {featured.location} ·{' '}
-                {new Date(featured.startDate).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </p>
-              <CountdownTimer target={featured.startDate} />
-            </AnimatedSection>
+            <Reveal>
+              <div className="mb-14 border border-line px-8 py-12 text-center md:px-16">
+                <span className="badge badge-maroon">{featured.type}</span>
+                <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl">{featured.title}</h2>
+                <p className="mt-3 text-body">
+                  {featured.location} ·{' '}
+                  {new Date(featured.startDate).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </p>
+                <div className="mt-9">
+                  <CountdownTimer target={featured.startDate} />
+                </div>
+              </div>
+            </Reveal>
           )}
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid gap-px border border-line bg-line md:grid-cols-2">
             {items.map((event, i) => (
-              <AnimatedSection key={event._id} delay={i * 0.08}>
-                <div className="card p-6 flex gap-5">
-                  <div className="shrink-0 w-16 h-16 rounded-xl bg-maroon/10 border border-maroon/20 flex flex-col items-center justify-center text-maroon-glow">
-                    <span className="text-lg font-bold font-display">
-                      {new Date(event.startDate).getDate()}
-                    </span>
-                    <span className="text-[10px] uppercase">
-                      {new Date(event.startDate).toLocaleDateString('en-GB', { month: 'short' })}
-                    </span>
+              <Reveal key={event._id} delay={i * 0.04} className="h-full">
+                <div className="flex h-full flex-col justify-between gap-6 bg-bg p-8 transition-colors hover:bg-bg-panel">
+                  <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                    <Clock size={14} className="text-dim" />
+                    <span>{fmtDate(event.startDate)}</span>
                   </div>
-                  <div>
-                    <h3 className="font-display text-silver-bright text-lg">{event.title}</h3>
-                    <p className="text-sm text-silver-dim">
-                      {event.location} · {event.type}
-                    </p>
-                  </div>
+                  <h3 className="font-display text-2xl text-heading">{event.title}</h3>
+                  <p className="text-sm text-dim">
+                    {event.location} · {event.type}
+                  </p>
                 </div>
-              </AnimatedSection>
+              </Reveal>
             ))}
           </div>
         </div>

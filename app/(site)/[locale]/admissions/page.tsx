@@ -1,11 +1,10 @@
 import { getTranslations } from 'next-intl/server'
 import { PageHeader } from '@/components/shared/PageHeader'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { LiveBackground } from '@/components/shared/LiveBackground'
+import { Reveal } from '@/components/ui/Reveal'
 import { Link } from '@/lib/navigation'
 import { sanityFetch } from '@/lib/sanity/client'
 import { resourcesQuery } from '@/lib/sanity/queries'
-import { CheckCircle, FileText, Phone, ArrowRight } from 'lucide-react'
+import { CheckCircle, ArrowRight } from 'lucide-react'
 import type { DownloadableResource } from '@/types/sanity'
 
 const STEPS = [
@@ -52,88 +51,89 @@ export default async function AdmissionsPage() {
     <>
       <PageHeader eyebrow="Join the Legacy" title="Admissions" highlight="2027" />
 
-      <section className="section relative overflow-hidden">
-        <LiveBackground variant="section" />
-        <div className="container relative max-w-3xl">
-          <AnimatedSection className="text-center mb-12">
-            <p className="text-silver-dim leading-relaxed">
+      <section className="section">
+        <div className="container max-w-3xl">
+          <Reveal>
+            <p className="text-body leading-relaxed">
               Applications for the 2027 academic year are now open. We welcome applications from
               students of all backgrounds who share our commitment to excellence, wisdom, and
               service.
             </p>
-          </AnimatedSection>
+          </Reveal>
 
-          <AnimatedSection>
-            <h2 className="section-heading mb-10">
+          <Reveal>
+            <h2 className="section-heading mb-10 mt-16">
               How to <span>Apply</span>
             </h2>
-          </AnimatedSection>
+          </Reveal>
 
-          <div className="space-y-5 mb-14">
-            {STEPS.map((s, i) => (
-              <AnimatedSection key={s.step} delay={i * 0.08}>
-                <div className="card p-6 flex gap-5 items-start">
-                  <div className="shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-bold border border-maroon/30 bg-maroon/10 text-maroon-glow font-display">
-                    {s.step}
-                  </div>
+          <Reveal>
+            <ol className="divide-y divide-line border-y border-line">
+              {STEPS.map((s) => (
+                <li
+                  key={s.step}
+                  className="grid gap-1 py-7 sm:grid-cols-[64px_1fr] sm:gap-6 sm:items-baseline"
+                >
+                  <span className="font-display text-3xl text-gold">{s.step}</span>
                   <div>
-                    <h3 className="text-silver-bright font-semibold mb-1">{s.title}</h3>
-                    <p className="text-silver-dim text-sm leading-relaxed">{s.desc}</p>
+                    <h3 className="text-xl text-heading">{s.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-body">{s.desc}</p>
                   </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
-            <AnimatedSection>
-              <div className="card p-6">
-                <Phone size={20} className="text-maroon-glow mb-3" />
-                <h3 className="text-silver-bright font-semibold mb-2">Call the Office</h3>
-                <a href="tel:+94112695296" className="text-maroon-glow hover:underline text-sm">
+          <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            <Reveal>
+              <div className="h-full border border-line p-7">
+                <p className="eyebrow">Call the Office</p>
+                <a
+                  href="tel:+94112695296"
+                  className="mt-4 block font-display text-2xl text-heading transition-colors hover:text-gold"
+                >
                   +94 11 269 5296
                 </a>
-                <p className="text-silver-dim text-xs mt-1">Mon–Fri, 7:30 AM – 4:00 PM</p>
+                <p className="mt-2 text-sm text-dim">Mon–Fri, 7:30 AM – 4:00 PM</p>
               </div>
-            </AnimatedSection>
-            <AnimatedSection delay={0.1}>
-              <div className="card p-6">
-                <FileText size={20} className="text-maroon-glow mb-3" />
-                <h3 className="text-silver-bright font-semibold mb-2">Download Forms</h3>
-                <p className="text-silver-dim text-sm mb-3">
+            </Reveal>
+            <Reveal delay={0.08}>
+              <div className="h-full border border-line p-7">
+                <p className="eyebrow">Download Forms</p>
+                <p className="mt-4 text-sm text-body">
                   Official application and information packs.
                 </p>
                 {resources.length ? (
-                  <ul className="space-y-2">
+                  <ul className="mt-4 space-y-2">
                     {resources.map((r) => (
                       <li key={r._id}>
                         <a
                           href={r.fileUrl}
                           download
-                          className="text-sm text-maroon-glow hover:underline flex items-center gap-1"
+                          className="flex items-center gap-2 text-sm text-gold hover:text-maroon-glow"
                         >
-                          <CheckCircle size={12} /> {r.title}
+                          <CheckCircle size={13} /> {r.title}
                         </a>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <button className="btn btn-ghost text-xs py-1.5 px-4" disabled>
+                  <button className="btn btn-ghost mt-3 px-0 text-xs" disabled>
                     Forms coming soon
                   </button>
                 )}
               </div>
-            </AnimatedSection>
+            </Reveal>
           </div>
 
-          <AnimatedSection className="text-center">
-            <p className="text-silver-dim text-sm mb-4">
+          <Reveal className="mt-14 text-center">
+            <p className="mb-6 text-sm text-dim">
               Have a question? Our admissions team is happy to help.
             </p>
             <Link href="/contact" className="btn btn-primary">
-              Contact Admissions <ArrowRight size={14} />
+              Contact Admissions <ArrowRight size={16} strokeWidth={1.5} />
             </Link>
-          </AnimatedSection>
+          </Reveal>
         </div>
       </section>
     </>

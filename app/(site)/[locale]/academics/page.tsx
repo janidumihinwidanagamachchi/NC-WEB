@@ -1,7 +1,8 @@
 import { getTranslations } from 'next-intl/server'
 import { PageHeader } from '@/components/shared/PageHeader'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { LiveBackground } from '@/components/shared/LiveBackground'
+import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Reveal } from '@/components/ui/Reveal'
+import { IconBox } from '@/components/ui/IconBox'
 import { BookOpen, FlaskConical, Calculator, Globe } from 'lucide-react'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -38,29 +39,25 @@ export default async function AcademicsPage() {
     <>
       <PageHeader eyebrow="Academic Excellence" title="Academic" highlight="Programmes" />
 
-      <section className="section relative overflow-hidden">
-        <LiveBackground variant="section" />
-        <div className="container relative">
-          <AnimatedSection className="text-center mb-12">
-            <p className="text-silver-dim max-w-2xl mx-auto">
-              Nalanda offers a rigorous national curriculum from Grade 1 through Advanced Level,
-              designed to develop critical thinking, creativity, and character.
-            </p>
-          </AnimatedSection>
+      <section className="section">
+        <div className="container">
+          <Reveal>
+            <SectionHeading
+              align="center"
+              title={
+                <>
+                  Rigorous study, <span>holistic growth</span>
+                </>
+              }
+              lead="Nalanda offers a rigorous national curriculum from Grade 1 through Advanced Level, designed to develop critical thinking, creativity, and character."
+            />
+          </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid gap-6 md:grid-cols-2">
             {STREAMS.map((s, i) => (
-              <AnimatedSection key={s.title} delay={i * 0.1}>
-                <div className="card p-6 flex gap-5">
-                  <div className="shrink-0 w-12 h-12 rounded-xl bg-maroon/10 border border-maroon/20 flex items-center justify-center text-maroon-glow">
-                    <s.icon size={22} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-display text-silver-bright mb-2">{s.title}</h3>
-                    <p className="text-sm text-silver-dim leading-relaxed">{s.desc}</p>
-                  </div>
-                </div>
-              </AnimatedSection>
+              <Reveal key={s.title} delay={i * 0.06} className="h-full">
+                <IconBox icon={s.icon} title={s.title} text={s.desc} className="h-full" />
+              </Reveal>
             ))}
           </div>
         </div>

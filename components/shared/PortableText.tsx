@@ -11,48 +11,34 @@ const components: PortableTextComponents = {
       if (!value?.asset) return null
       const src = urlFor(value).url()
       return (
-        <figure className="my-8">
+        <figure>
           <Image
             src={src}
             alt={value.alt || ''}
             width={1200}
             height={675}
-            className="w-full rounded-xl"
+            className="w-full border border-line"
           />
           {value.alt && (
-            <figcaption className="text-center text-sm text-silver-dim mt-2">
-              {value.alt}
-            </figcaption>
+            <figcaption className="mt-2 text-center text-sm text-dim">{value.alt}</figcaption>
           )}
         </figure>
       )
     },
   },
   block: {
-    h2: ({ children }) => (
-      <h2 className="text-2xl font-display text-silver-bright mt-10 mb-4">{children}</h2>
-    ),
-    h3: ({ children }) => (
-      <h3 className="text-xl font-display text-silver-bright mt-8 mb-3">{children}</h3>
-    ),
-    normal: ({ children }) => <p className="text-silver-dim leading-relaxed mb-4">{children}</p>,
-    blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-maroon-glow pl-5 italic text-silver my-6">
-        {children}
-      </blockquote>
-    ),
+    h2: ({ children }) => <h2 className="mt-10 mb-4">{children}</h2>,
+    h3: ({ children }) => <h3 className="mt-8 mb-3">{children}</h3>,
+    normal: ({ children }) => <p>{children}</p>,
+    blockquote: ({ children }) => <blockquote>{children}</blockquote>,
   },
   list: {
-    bullet: ({ children }) => (
-      <ul className="list-disc pl-6 mb-4 text-silver-dim space-y-1">{children}</ul>
-    ),
-    number: ({ children }) => (
-      <ol className="list-decimal pl-6 mb-4 text-silver-dim space-y-1">{children}</ol>
-    ),
+    bullet: ({ children }) => <ul>{children}</ul>,
+    number: ({ children }) => <ol>{children}</ol>,
   },
   marks: {
     link: ({ value, children }) => (
-      <a href={value?.href} className="text-maroon-glow hover:underline">
+      <a href={value?.href} target="_blank" rel="noopener noreferrer">
         {children}
       </a>
     ),

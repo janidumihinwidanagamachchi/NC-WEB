@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react'
 import { PageHeader } from '@/components/shared/PageHeader'
-import { LiveBackground } from '@/components/shared/LiveBackground'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
+import { Reveal } from '@/components/ui/Reveal'
 
 const ALBUMS = ['All', 'Sports', 'Cultural', 'Academic', 'Campus']
 
@@ -30,49 +29,48 @@ export default function GalleryPage() {
     <>
       <PageHeader eyebrow="Memories" title="Photo" highlight="Gallery" />
 
-      <section className="section relative overflow-hidden min-h-screen">
-        <LiveBackground variant="section" />
-        <div className="container relative">
-          <AnimatedSection className="sticky top-20 z-30 mb-8">
-            <div className="flex gap-2 overflow-x-auto pb-2">
+      <section className="section">
+        <div className="container">
+          <Reveal className="mb-10">
+            <div className="flex flex-wrap gap-2">
               {ALBUMS.map((a) => (
                 <button
                   key={a}
                   onClick={() => setFilter(a)}
-                  className={`shrink-0 px-5 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`border px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors ${
                     filter === a
-                      ? 'bg-maroon-glow text-white'
-                      : 'text-silver-dim border border-maroon/20 hover:border-maroon-glow hover:text-silver-bright'
+                      ? 'border-maroon-bright bg-maroon-bright text-cream'
+                      : 'border-line text-dim hover:border-maroon-mid hover:text-heading'
                   }`}
                 >
                   {a}
                 </button>
               ))}
             </div>
-          </AnimatedSection>
+          </Reveal>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
             {filtered.map((item, i) => (
-              <AnimatedSection key={item.id} delay={i * 0.03}>
+              <Reveal key={item.id} delay={i * 0.02}>
                 <button
                   onClick={() => setLightbox(i)}
-                  className="relative aspect-square rounded-xl overflow-hidden group focus-visible:ring-2 ring-maroon-glow"
+                  className="group relative block aspect-square w-full overflow-hidden border border-line transition-colors hover:border-maroon-mid focus-visible:ring-2 focus-visible:ring-maroon-glow"
                   aria-label={`View ${item.title}`}
                 >
                   <div
-                    className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
+                    className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
                     style={{
                       background: `linear-gradient(135deg, ${item.color}, ${item.accent}33)`,
                     }}
                   />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
-                    <ZoomIn size={20} className="text-maroon-glow" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                    <ZoomIn size={20} className="text-gold" />
                   </div>
-                  <div className="absolute bottom-2 left-2 right-2 text-[10px] text-white/60 truncate">
+                  <div className="absolute bottom-3 left-3 right-3 text-[10px] uppercase tracking-[0.2em] text-white/60">
                     {item.title}
                   </div>
                 </button>
-              </AnimatedSection>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -81,10 +79,13 @@ export default function GalleryPage() {
       <AnimatePresence>
         {lightbox !== null && (
           <div
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
             onClick={() => setLightbox(null)}
           >
-            <button className="absolute top-4 right-4 text-white p-2 hover:text-maroon-glow transition-colors">
+            <button
+              className="absolute right-4 top-4 p-2 text-white transition-colors hover:text-gold"
+              aria-label="Close"
+            >
               <X size={28} />
             </button>
             <button
@@ -92,8 +93,9 @@ export default function GalleryPage() {
                 e.stopPropagation()
                 prev()
               }}
-              className="absolute left-4 text-white p-2 hover:text-maroon-glow transition-colors disabled:opacity-30"
+              className="absolute left-4 p-2 text-white transition-colors hover:text-gold disabled:opacity-30"
               disabled={lightbox === 0}
+              aria-label="Previous"
             >
               <ChevronLeft size={36} />
             </button>
@@ -102,29 +104,30 @@ export default function GalleryPage() {
                 e.stopPropagation()
                 next()
               }}
-              className="absolute right-4 text-white p-2 hover:text-maroon-glow transition-colors disabled:opacity-30"
+              className="absolute right-4 p-2 text-white transition-colors hover:text-gold disabled:opacity-30"
               disabled={lightbox === filtered.length - 1}
+              aria-label="Next"
             >
               <ChevronRight size={36} />
             </button>
 
             <div
-              className="w-[80vw] h-[70vh] max-w-4xl rounded-2xl overflow-hidden flex items-center justify-center"
+              className="flex h-[70vh] w-[80vw] max-w-4xl items-center justify-center overflow-hidden"
               style={{
                 background: `linear-gradient(135deg, ${filtered[lightbox].color}, ${filtered[lightbox].accent}33)`,
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="text-center text-silver-bright">
-                <div className="text-6xl mb-3" style={{ color: filtered[lightbox].accent }}>
+              <div className="text-center text-heading">
+                <div className="mb-3 text-6xl" style={{ color: filtered[lightbox].accent }}>
                   ◆
                 </div>
                 <p className="text-sm">{filtered[lightbox].title}</p>
-                <p className="text-xs mt-1 text-silver-dim">{filtered[lightbox].album}</p>
+                <p className="mt-1 text-xs text-dim">{filtered[lightbox].album}</p>
               </div>
             </div>
 
-            <div className="absolute bottom-4 text-silver-dim text-sm">
+            <div className="absolute bottom-4 text-sm text-dim">
               {lightbox + 1} / {filtered.length}
             </div>
           </div>

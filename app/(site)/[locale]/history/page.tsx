@@ -1,7 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import { PageHeader } from '@/components/shared/PageHeader'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { LiveBackground } from '@/components/shared/LiveBackground'
+import { Reveal } from '@/components/ui/Reveal'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -39,23 +38,20 @@ export default async function HistoryPage() {
     <>
       <PageHeader eyebrow="Our Legacy" title="History of" highlight="Nalanda" />
 
-      <section className="section relative overflow-hidden">
-        <LiveBackground variant="section" />
-        <div className="container relative">
-          <div className="relative border-l-2 border-maroon/30 ml-4 md:ml-0 md:pl-0 space-y-12">
+      <section className="section">
+        <div className="container">
+          <div className="relative border-l border-line-warm pl-8 sm:pl-12">
             {MILESTONES.map((m, i) => (
-              <AnimatedSection key={m.year} delay={i * 0.1}>
-                <div className="md:flex items-start gap-8">
-                  <div className="md:w-32 shrink-0 text-maroon-glow font-display text-2xl font-bold md:text-right">
-                    {m.year}
-                  </div>
-                  <div className="relative pl-8 md:pl-0">
-                    <div className="absolute left-[-33px] md:left-[-41px] top-2 w-4 h-4 rounded-full bg-maroon-glow border-4 border-bg-deep" />
-                    <h3 className="text-xl font-display text-silver-bright mb-2">{m.title}</h3>
-                    <p className="text-silver-dim">{m.desc}</p>
-                  </div>
+              <Reveal key={m.year} delay={i * 0.06} className="relative pb-12 last:pb-0">
+                <span className="absolute -left-[41px] top-1.5 h-3 w-3 rounded-full border border-maroon-mid bg-bg">
+                  <span className="absolute inset-0 rounded-full bg-maroon-bright" />
+                </span>
+                <div className="text-gold font-display text-3xl font-normal tracking-tight">
+                  {m.year}
                 </div>
-              </AnimatedSection>
+                <h3 className="mt-2 text-2xl text-heading">{m.title}</h3>
+                <p className="mt-2 max-w-2xl text-body leading-relaxed">{m.desc}</p>
+              </Reveal>
             ))}
           </div>
         </div>

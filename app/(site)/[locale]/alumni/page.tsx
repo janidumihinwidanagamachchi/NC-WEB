@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { PageHeader } from '@/components/shared/PageHeader'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { LiveBackground } from '@/components/shared/LiveBackground'
+import { Reveal } from '@/components/ui/Reveal'
+import { BannerCard } from '@/components/ui/BannerCard'
 import { sanityFetch } from '@/lib/sanity/client'
 import { alumniQuery } from '@/lib/sanity/queries'
 import type { AlumniAchievement } from '@/types/sanity'
@@ -42,30 +42,27 @@ export default async function AlumniPage() {
     <>
       <PageHeader eyebrow="Old Nalandians" title="Alumni" highlight="Achievements" />
 
-      <section className="section relative overflow-hidden">
-        <LiveBackground variant="section" />
-        <div className="container relative">
-          <AnimatedSection className="text-center mb-12">
-            <p className="text-silver-dim max-w-2xl mx-auto">
+      <section className="section">
+        <div className="container">
+          <Reveal>
+            <p className="mx-auto max-w-2xl text-center text-body leading-relaxed">
               Old Nalandians continue to shape Sri Lanka and the world across every field of human
               endeavour.
             </p>
-          </AnimatedSection>
+          </Reveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {items.map((person, i) => (
-              <AnimatedSection key={person._id} delay={i * 0.1}>
-                <div className="card p-6 text-center h-full">
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-bg-mid border border-maroon/20 flex items-center justify-center text-2xl font-display text-maroon-glow">
-                    {person.name.charAt(0)}
-                  </div>
-                  <h3 className="text-lg font-display text-silver-bright">{person.name}</h3>
-                  <p className="text-xs text-maroon-glow uppercase tracking-wider mb-3">
-                    {person.field} · Batch {person.batch}
-                  </p>
-                  <p className="text-sm text-silver-dim">{person.achievement}</p>
-                </div>
-              </AnimatedSection>
+              <Reveal key={person._id} delay={i * 0.06} className="h-full">
+                <BannerCard
+                  href="/alumni"
+                  title={person.name}
+                  meta={`${person.field} · Batch ${person.batch}`}
+                  caption={person.achievement}
+                  placeholderLabel="Portrait"
+                  className="h-full"
+                />
+              </Reveal>
             ))}
           </div>
         </div>

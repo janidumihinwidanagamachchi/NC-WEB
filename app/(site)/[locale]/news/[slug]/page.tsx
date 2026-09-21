@@ -5,9 +5,9 @@ import { sanityFetch } from '@/lib/sanity/client'
 import { urlFor } from '@/lib/sanity/image'
 import { newsBySlugQuery, relatedNewsQuery, allNewsQuery } from '@/lib/sanity/queries'
 import { PortableText } from '@/components/shared/PortableText'
+import { Reveal } from '@/components/ui/Reveal'
+import { Placeholder } from '@/components/ui/Placeholder'
 import { Link } from '@/lib/navigation'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { LiveBackground } from '@/components/shared/LiveBackground'
 import { ArrowLeft, Calendar, Share2 } from 'lucide-react'
 import type { NewsArticle } from '@/types/sanity'
 
@@ -84,83 +84,89 @@ export default async function NewsArticlePage({
 
   return (
     <>
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <LiveBackground variant="section" />
-        <div className="container relative">
-          <AnimatedSection>
-            <Link
-              href="/news"
-              className="inline-flex items-center gap-2 text-sm text-silver-dim hover:text-maroon-glow transition-colors mb-6"
-            >
-              <ArrowLeft size={16} /> Back to News
-            </Link>
+      <section className="pb-20 pt-36">
+        <div className="container">
+          <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
+            <div className="min-w-0">
+              <Reveal>
+                <Link
+                  href="/news"
+                  className="inline-flex items-center gap-2 text-sm text-dim transition-colors hover:text-gold"
+                >
+                  <ArrowLeft size={15} /> Back to News
+                </Link>
 
-            <span className="badge badge-maroon mb-4">{item.category}</span>
-            <h1 className="text-3xl sm:text-5xl font-bold font-display text-silver-bright max-w-4xl mb-6">
-              {item.title}
-            </h1>
+                <span className="badge mt-6">{item.category}</span>
+                <h1 className="mt-5 max-w-4xl text-4xl sm:text-5xl md:text-6xl">{item.title}</h1>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-silver-dim mb-8">
-              <span className="flex items-center gap-1.5">
-                <Calendar size={14} />
-                {new Date(item.publishedAt).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </span>
-              <button className="flex items-center gap-1.5 hover:text-maroon-glow transition-colors">
-                <Share2 size={14} /> Share
-              </button>
+                <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-dim">
+                  <span className="flex items-center gap-2">
+                    <Calendar size={14} className="text-gold" />
+                    {new Date(item.publishedAt).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </span>
+                  <button className="flex items-center gap-2 transition-colors hover:text-gold">
+                    <Share2 size={14} /> Share
+                  </button>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.08}>
+                {item.coverImage ? (
+                  <div className="mt-10 aspect-video overflow-hidden border border-line">
+                    <Image
+                      src={urlFor(item.coverImage).url()}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 800px"
+                      priority
+                    />
+                  </div>
+                ) : (
+                  <Placeholder label="News cover" className="mt-10 aspect-video" />
+                )}
+              </Reveal>
+
+              <Reveal delay={0.12}>
+                <div className="prose-article mt-10 max-w-none">
+                  {item.body ? <PortableText value={item.body} /> : <p>{item.excerpt}</p>}
+                </div>
+              </Reveal>
             </div>
 
-            {item.coverImage && (
-              <div className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-10">
-                <Image
-                  src={urlFor(item.coverImage).url()}
-                  alt={item.title}
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                  priority
-                />
-              </div>
-            )}
-          </AnimatedSection>
-
-          <div className="grid lg:grid-cols-[1fr_320px] gap-12">
-            <AnimatedSection>
-              <article className="prose prose-invert max-w-none">
-                {item.body ? (
-                  <PortableText value={item.body} />
-                ) : (
-                  <p className="text-silver-dim">{item.excerpt}</p>
-                )}
-              </article>
-            </AnimatedSection>
-
             <aside>
-              <AnimatedSection delay={0.1}>
-                <div className="card p-6 sticky top-24">
-                  <h3 className="font-display text-silver-bright mb-4">Related News</h3>
+              <Reveal delay={0.1}>
+                <div className="border border-line p-7 lg:sticky lg:top-24">
+                  <p className="eyebrow">Related news</p>
                   {related.length ? (
-                    <ul className="space-y-4">
+                    <ul className="mt-6 space-y-5">
                       {related.map((r) => (
                         <li key={r._id}>
                           <Link
                             href={`/news/${r.slug.current}`}
-                            className="text-sm text-silver-dim hover:text-maroon-glow transition-colors line-clamp-2"
+                            className="block font-display text-lg text-heading transition-colors hover:text-gold-light"
                           >
                             {r.title}
                           </Link>
+                          <span className="mt-1 block text-xs uppercase tracking-[0.18em] text-dim">
+                            {new Date(r.publishedAt).toLocaleDateString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                              year: 'numeric',
+                            })}
+                          </span>
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-sm text-silver-dim">No related articles yet.</p>
+                    <p className="mt-6 text-sm text-dim">No related articles yet.</p>
                   )}
                 </div>
-              </AnimatedSection>
+              </Reveal>
             </aside>
           </div>
         </div>

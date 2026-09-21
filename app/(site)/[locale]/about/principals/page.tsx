@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { PageHeader } from '@/components/shared/PageHeader'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { LiveBackground } from '@/components/shared/LiveBackground'
+import { Reveal } from '@/components/ui/Reveal'
+import { BannerCard } from '@/components/ui/BannerCard'
 import { sanityFetch } from '@/lib/sanity/client'
 import { staffQuery } from '@/lib/sanity/queries'
 import type { StaffMember } from '@/types/sanity'
@@ -34,20 +34,19 @@ export default async function PrincipalsPage() {
     <>
       <PageHeader eyebrow="Leadership" title="Past & Present" highlight="Principals" />
 
-      <section className="section relative overflow-hidden">
-        <LiveBackground variant="section" />
-        <div className="container relative">
-          <div className="grid md:grid-cols-3 gap-6">
+      <section className="section">
+        <div className="container">
+          <div className="grid gap-6 md:grid-cols-3">
             {principals.map((p, i) => (
-              <AnimatedSection key={p._id} delay={i * 0.1}>
-                <div className="card p-6 text-center">
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-bg-mid border border-maroon/20 flex items-center justify-center text-2xl font-display text-maroon-glow">
-                    {p.name.charAt(0)}
-                  </div>
-                  <h3 className="text-lg font-display text-silver-bright">{p.name}</h3>
-                  <p className="text-sm text-maroon-glow">{p.designation}</p>
-                </div>
-              </AnimatedSection>
+              <Reveal key={p._id} delay={i * 0.08} className="h-full">
+                <BannerCard
+                  href="/about/principals"
+                  title={p.name}
+                  meta={p.designation}
+                  placeholderLabel="Portrait"
+                  className="h-full"
+                />
+              </Reveal>
             ))}
           </div>
         </div>

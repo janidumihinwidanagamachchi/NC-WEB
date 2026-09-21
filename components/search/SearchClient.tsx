@@ -71,39 +71,41 @@ export function SearchClient() {
   }, [query, index])
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="mx-auto max-w-2xl">
       <div className="relative mb-12">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search news, events, staff, alumni..."
-          className="w-full rounded-xl bg-bg-mid border border-maroon/20 pl-12 pr-4 py-4 text-silver-bright placeholder:text-silver-dim focus:border-maroon-glow focus:outline-none"
+          className="w-full border border-line bg-transparent py-4 pl-12 pr-4 text-heading placeholder:text-dim focus:border-maroon-mid focus:outline-none"
         />
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-silver-dim" size={20} />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" size={20} />
       </div>
 
       {failed && (
-        <p className="text-center text-silver-dim">
+        <p className="text-center text-dim">
           Search is unavailable right now. Please try again later.
         </p>
       )}
 
       {!failed && query.trim() && results.length === 0 && (
-        <p className="text-center text-silver-dim">No results found for &quot;{query}&quot;.</p>
+        <p className="text-center text-dim">No results found for &quot;{query}&quot;.</p>
       )}
 
-      <div className="grid gap-4">
+      <div className="divide-y divide-line">
         {results.map((item, i) => (
           <Link
             key={`${item._type}-${item.slug?.current ?? i}`}
             href={hrefFor(item)}
-            className="card p-5 block hover:border-maroon-glow/50"
+            className="group block px-3 py-6 transition-colors hover:bg-bg-panel"
           >
-            <span className="text-xs uppercase tracking-wider text-maroon-glow">{item._type}</span>
-            <h3 className="text-lg font-display text-silver-bright mt-1">{titleFor(item)}</h3>
+            <span className="text-xs uppercase tracking-[0.18em] text-gold">{item._type}</span>
+            <h3 className="mt-1 font-display text-xl text-heading transition-colors group-hover:text-gold-light">
+              {titleFor(item)}
+            </h3>
             {excerptFor(item) && (
-              <p className="text-sm text-silver-dim line-clamp-2 mt-1">{excerptFor(item)}</p>
+              <p className="mt-1 text-sm text-dim line-clamp-2">{excerptFor(item)}</p>
             )}
           </Link>
         ))}

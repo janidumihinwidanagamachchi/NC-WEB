@@ -1,4 +1,6 @@
-import { AnimatedSection } from './AnimatedSection'
+import { cn } from '@/lib/utils'
+import { Reveal } from '@/components/ui/Reveal'
+import { Eyebrow } from '@/components/ui/Eyebrow'
 
 export function PageHeader({
   eyebrow,
@@ -12,25 +14,29 @@ export function PageHeader({
   description?: string
 }) {
   return (
-    <div className="relative py-20 bg-bg-dark border-b border-maroon/10">
+    <div className="relative pt-36 pb-20 border-b border-line">
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,15,26,0.2) 0%, transparent 70%)',
+            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(107,15,26,0.28) 0%, transparent 68%)',
         }}
       />
       <div className="container relative text-center">
         {eyebrow && (
-          <p className="text-xs tracking-[0.2em] uppercase font-semibold mb-3 text-maroon-glow">
-            {eyebrow}
-          </p>
+          <Reveal>
+            <Eyebrow className="justify-center">{eyebrow}</Eyebrow>
+          </Reveal>
         )}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-silver-bright font-display">
-          {title} {highlight && <span className="text-maroon-glow">{highlight}</span>}
-        </h1>
+        <Reveal delay={0.06}>
+          <h1 className="mt-5 text-5xl sm:text-6xl md:text-7xl">
+            {title} {highlight && <span className="text-gold">{highlight}</span>}
+          </h1>
+        </Reveal>
         {description && (
-          <p className="max-w-2xl mx-auto mt-5 text-silver-dim leading-relaxed">{description}</p>
+          <Reveal delay={0.12}>
+            <p className="mx-auto mt-6 max-w-2xl text-body leading-relaxed">{description}</p>
+          </Reveal>
         )}
       </div>
     </div>
@@ -44,9 +50,5 @@ export function SectionWrapper({
   children: React.ReactNode
   className?: string
 }) {
-  return (
-    <AnimatedSection>
-      <section className={`section ${className ?? ''}`}>{children}</section>
-    </AnimatedSection>
-  )
+  return <section className={cn('section', className)}>{children}</section>
 }

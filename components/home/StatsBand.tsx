@@ -10,7 +10,7 @@ const STATS = [
   { label: 'Distinguished Alumni', value: 10000, suffix: '+' },
 ]
 
-export function StatsBanner() {
+export function StatsBand() {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export function StatsBanner() {
     counters?.forEach((el) => {
       const target = Number(el.getAttribute('data-count'))
       const start = performance.now()
-      const duration = 2500
+      const duration = 2000
 
       const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4)
 
@@ -38,7 +38,7 @@ export function StatsBanner() {
             }
           })
         },
-        { threshold: 0.5 }
+        { threshold: 0.4 }
       )
 
       observer.observe(el)
@@ -46,18 +46,20 @@ export function StatsBanner() {
   }, [])
 
   return (
-    <div ref={ref} className="bg-maroon py-16">
-      <div className="container grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+    <section ref={ref} className="section">
+      <div className="container grid grid-cols-2 gap-px border border-line bg-line md:grid-cols-5">
         {STATS.map((s) => (
-          <div key={s.label}>
-            <div className="text-4xl md:text-5xl font-bold text-silver-bright">
+          <div key={s.label} className="bg-bg p-8 transition-colors hover:bg-bg-panel">
+            <div className="stat-number">
               <span data-count={s.value}>0</span>
               {s.suffix}
             </div>
-            <p className="text-maroon-100 text-sm mt-2 font-medium">{s.label}</p>
+            <p className="mt-3 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-dim">
+              {s.label}
+            </p>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   )
 }

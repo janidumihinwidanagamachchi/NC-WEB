@@ -1,9 +1,8 @@
 import { getTranslations } from 'next-intl/server'
 import { PageHeader } from '@/components/shared/PageHeader'
-import { AnimatedSection } from '@/components/shared/AnimatedSection'
-import { LiveBackground } from '@/components/shared/LiveBackground'
+import { Reveal } from '@/components/ui/Reveal'
 import { Link } from '@/lib/navigation'
-import { Calendar, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { sanityFetch } from '@/lib/sanity/client'
 import { allNewsQuery } from '@/lib/sanity/queries'
 import type { NewsArticle } from '@/types/sanity'
@@ -38,13 +37,8 @@ const DEMO: NewsArticle[] = [
   },
 ]
 
-const CATEGORY_COLORS: Record<string, string> = {
-  Academic: '#c8960c',
-  Sports: '#6b0f1a',
-  Cultural: '#2a5f3f',
-  Alumni: '#1a3a6b',
-  General: '#5a2d82',
-}
+const fmtDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -60,44 +54,35 @@ export default async function NewsPage() {
     <>
       <PageHeader eyebrow="Stay Informed" title="News &" highlight="Announcements" />
 
-      <section className="section relative overflow-hidden min-h-screen">
-        <LiveBackground variant="section" />
-        <div className="container relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="section">
+        <div className="container">
+          <div className="divide-y divide-line border-b border-line">
             {items.map((item, i) => (
-              <AnimatedSection key={item._id} delay={i * 0.08}>
-                <article className="card group h-full flex flex-col">
-                  <div
-                    className="h-1"
-                    style={{ background: CATEGORY_COLORS[item.category] ?? '#c8960c' }}
-                  />
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="badge badge-gold">{item.category}</span>
-                      <span className="flex items-center gap-1 text-silver-dim text-xs">
-                        <Calendar size={11} />
-                        {new Date(item.publishedAt).toLocaleDateString('en-GB', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        })}
-                      </span>
-                    </div>
-                    <h2 className="text-silver-bright font-semibold mb-3 group-hover:text-maroon-glow transition-colors font-display text-base leading-snug line-clamp-3">
+              <Reveal key={item._id} delay={i * 0.04}>
+                <Link
+                  href={`/news/${item.slug.current}`}
+                  className="group grid gap-3 py-8 transition-colors hover:bg-bg-panel sm:grid-cols-[150px_1fr_auto] sm:items-baseline sm:gap-8 sm:px-4"
+                >
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-dim">
+                    {fmtDate(item.publishedAt)}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block font-display text-xl text-heading transition-colors group-hover:text-gold-light sm:text-2xl">
                       {item.title}
-                    </h2>
-                    <p className="text-silver-dim text-sm leading-relaxed line-clamp-3 mb-5 flex-1">
-                      {item.excerpt}
-                    </p>
-                    <Link
-                      href={`/news/${item.slug.current}`}
-                      className="inline-flex items-center gap-1.5 text-maroon-glow text-sm font-medium hover:gap-3 transition-all"
-                    >
-                      Read more <ArrowRight size={13} />
-                    </Link>
-                  </div>
-                </article>
-              </AnimatedSection>
+                    </span>
+                    <span className="mt-1.5 block max-w-2xl text-sm text-dim">{item.excerpt}</span>
+                  </span>
+                  <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-body">
+                    <span className="hidden font-normal normal-case tracking-normal text-gold sm:inline">
+                      {item.category}
+                    </span>
+                    <ArrowRight
+                      size={16}
+                      className="text-dim transition-all group-hover:translate-x-1 group-hover:text-gold"
+                    />
+                  </span>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
