@@ -7,7 +7,7 @@ import { contactSchema, type ContactInput } from '@/lib/validations/contact'
 const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || ''
 
 const inputClass =
-  'w-full border-0 border-b border-line bg-transparent px-0 py-4 text-heading placeholder:text-dim transition-colors focus:border-maroon-mid focus:outline-none'
+  'w-full border border-[#343a3d] bg-[#1F2224] px-4 py-4 text-[#808080] transition-colors placeholder:text-[#808080] focus:border-[#E3CAB6] focus:bg-[#2a2d31] focus:text-[#E3CAB6] focus:outline-none'
 
 export function ContactForm() {
   const {
@@ -87,7 +87,7 @@ export function ContactForm() {
       <div>
         <textarea
           id="message"
-          rows={4}
+          rows={2}
           placeholder="Your message..."
           {...register('message')}
           className={inputClass}
@@ -100,9 +100,9 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="btn btn-primary w-full justify-center disabled:opacity-60"
+        className="mt-4 w-full border-0 border-t border-white bg-transparent py-4 font-sans text-[16px] font-medium text-white transition-colors hover:border-[#E3CAB6] hover:text-[#E3CAB6] disabled:opacity-60"
       >
-        {status === 'loading' ? 'Sending...' : 'SEND MESSAGE'}
+        {status === 'loading' ? 'SEND MESSAGE' : 'SEND MESSAGE'}
       </button>
 
       {status === 'success' && (
