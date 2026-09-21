@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "title": "Nalanda College Colombo",
+    "description": "Sri Lanka's premier Buddhist national school — Nurturing Excellence, Wisdom & Character since 1924."
+  },
+  "nav": {
+    "about": "About",
+    "history": "History",
+    "principals": "Past Principals",
+    "academics": "Academics",
+    "news": "News",
+    "extracurricular": "Extra Curricular",
+    "clubs": "Clubs & Societies",
+    "sports": "Sports",
+    "events": "Events",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "admissions": "Admissions",
+    "alumni": "Alumni",
+    "applyNow": "Apply Now",
+    "language": "Language"
+  },
+  "common": {
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "discover": "Discover Nalanda",
+    "loading": "Loading...",
+    "scroll": "Scroll"
+  },
+  "footer": {
+    "copyright": "© {year} Nalanda College Colombo",
+    "motto": "Wisdom Illuminates Character"
+  }
+}
