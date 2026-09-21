@@ -1,9 +1,0 @@
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body className="min-h-screen flex items-center justify-center bg-bg-deep text-silver-bright">
-        {children}
-      </body>
-    </html>
-  )
-}

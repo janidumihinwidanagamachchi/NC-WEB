@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { contactSchema, type ContactInput } from '@/lib/validations/contact'
 
+const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || ''
+
 export function ContactForm() {
   const {
     register,
@@ -20,12 +22,24 @@ export function ContactForm() {
       return
     }
 
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setStatus('error')
+      return
+    }
+
     setStatus('loading')
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(parsed.data),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: parsed.data.name,
+          email: parsed.data.email,
+          phone: parsed.data.phone || '',
+          subject: parsed.data.subject,
+          message: parsed.data.message,
+        }),
       })
       if (res.ok) {
         setStatus('success')

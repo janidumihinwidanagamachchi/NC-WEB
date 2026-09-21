@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Cinzel, Crimson_Pro, Noto_Sans_Sinhala } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import '@/app/globals.css'
 import { Header } from '@/components/layout/Header'
@@ -64,6 +64,8 @@ export default async function LocaleLayout({
   if (!(routing.locales as ReadonlyArray<string>).includes(locale)) {
     notFound()
   }
+
+  setRequestLocale(locale)
 
   const messages = await getMessages()
 

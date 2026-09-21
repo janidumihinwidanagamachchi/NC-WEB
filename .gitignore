@@ -47,3 +47,6 @@ coverage/
 
 # sanity
 .sanity/
+
+# build-time generated search index
+public/search-index.json

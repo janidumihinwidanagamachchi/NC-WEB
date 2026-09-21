@@ -45,11 +45,12 @@ export async function generateMetadata({
 }) {
   const { locale, slug } = await params
   const t = await getTranslations({ locale, namespace: 'nav' })
-  const article = await sanityFetch<NewsArticle | null>({
+  const result = await sanityFetch<NewsArticle | null>({
     query: newsBySlugQuery,
     params: { slug },
     tags: ['newsArticle'],
   })
+  const article = Array.isArray(result) ? (result[0] ?? null) : result
   return {
     title: article?.title ?? t('news'),
     description: article?.excerpt,
@@ -62,11 +63,12 @@ export default async function NewsArticlePage({
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { slug } = await params
-  const article = await sanityFetch<NewsArticle | null>({
+  const result = await sanityFetch<NewsArticle | null>({
     query: newsBySlugQuery,
     params: { slug },
     tags: ['newsArticle'],
   })
+  const article = Array.isArray(result) ? (result[0] ?? null) : result
 
   if (!article && slug !== DEMO.slug.current) {
     notFound()

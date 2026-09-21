@@ -36,7 +36,7 @@ export async function sanityFetch<T>({
     return [] as unknown as T
   }
 
-  return client.fetch<T>(query, params, {
-    next: { revalidate: 60, tags },
-  })
+  void tags
+
+  return client.fetch<T>(query, params)
 }
