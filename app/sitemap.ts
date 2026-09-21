@@ -27,8 +27,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const locale of LOCALES) {
     for (const path of PATHS) {
+      const url = path === '/' ? `${BASE}/${locale}/` : `${BASE}/${locale}${path}/`
       entries.push({
-        url: `${BASE}/${locale}${path}/`,
+        url,
         lastModified: new Date(),
         changeFrequency: path === '/' ? 'daily' : 'weekly',
         priority: path === '/' ? 1 : 0.7,
